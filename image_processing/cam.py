@@ -83,6 +83,8 @@ while(1):
         cv2.rectangle(imageFrame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)
         cv2.putText(imageFrame, f"{detections.names[class_id]} {int(confidence_score*100)}%", (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
 
+        print(f'({(xmax+xmin)/2}, {(ymax+ymin)/2})')
+
     cv2.imshow("Color Detection - RGB", imageFrame)
 
     if cv2.waitKey(10) & 0xFF == ord('q'):
