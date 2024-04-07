@@ -1,14 +1,19 @@
 import cv2
 import numpy as np
+from ultralytics import YOLO
 
 #Capture video stream
 webcam = cv2.VideoCapture(0)
+
+CONFIDENCE_THRESHOLD = 0.8
+
+yolo_model = YOLO("yolov8n.pt")
 
 while(1):
     
     #Read video and store as image frames
     _, imageFrame = webcam.read()
-    
+    '''
     #Convert frame from RGB to HSV
     hsvFrame = cv2.cvtColor(imageFrame, cv2.COLOR_BGR2HSV)
     
@@ -63,6 +68,20 @@ while(1):
             x, y, w, h = cv2.boundingRect(contour)
             imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y, w + h), (255, 0, 0), 2)
             cv2.putText(imageFrame, "Blue Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
+    '''
+    detections = yolo_model(imageFrame)[0]
+
+    for data in detections.boxes.data.tolist():
+        
+        confidence = data[4]
+        '''
+        if float(confidence) < CONFIDENCE_THRESHOLD:
+            continue
+        '''
+        xmin, ymin, xmax, ymax, confidence_score, class_id = int(data[0]), int(data[1]), int(data[2]), int(data[3]), float(data[4]), int(data[5])
+
+        cv2.rectangle(imageFrame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)
+        cv2.putText(imageFrame, f"{detections.names[class_id]} {int(confidence_score*100)}%", (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
 
     cv2.imshow("Color Detection - RGB", imageFrame)
 
