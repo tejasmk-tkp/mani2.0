@@ -43,8 +43,8 @@ while(1):
         area = cv2.contourArea(contour)
         if (area > 300):
             x, y, w, h = cv2.boundingRect(contour)
-#            imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y + w + h), (0, 0, 255), 2)
-#            cv2.putText(imageFrame, "Red Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255))
+            imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y, w + h), (0, 0, 255), 2)
+            cv2.putText(imageFrame, "Red Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255))
 
     contours, hierarchy = cv2.findContours(green_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -52,8 +52,8 @@ while(1):
         area = cv2.contourArea(contour)
         if (area > 300):
             x, y, w, h = cv2.boundingRect(contour)
-#            imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y + w + h), (0, 255, 0), 2)
-#            cv2.putText(imageFrame, "Green Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
+            imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y, w + h), (0, 255, 0), 2)
+            cv2.putText(imageFrame, "Green Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
 
     contours, hierarchy = cv2.findContours(blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -61,8 +61,8 @@ while(1):
         area = cv2.contourArea(contour)
         if (area > 300):
             x, y, w, h = cv2.boundingRect(contour)
-#            imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y + w + h), (255, 0, 0), 2)
-#            cv2.putText(imageFrame, "Blue Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
+            imageFrame = cv2.rectangle(imageFrame, (x, y), (x + y, w + h), (255, 0, 0), 2)
+            cv2.putText(imageFrame, "Blue Color", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
 
     cv2.imshow("Color Detection - RGB", imageFrame)
 
